@@ -1,0 +1,37 @@
+{# Calculate height (img-height/img-width*container-width) #}
+{% set container_height = ((module.sog_layer[0].sog_background_image.height
+  													/ module.sog_layer[0].sog_background_image.width)
+                            * 100) %}
+<script>
+	console.log("Container height: {{container_height}}");
+</script>
+<style>
+  .sog_animation-layer {
+    padding-top: {{ container_height }}% !important;
+  }
+  {% for item in module.sog_layer %}
+  .layer-{{ loop.index }} {
+    -webkit-animation-name: move-layer-{{ loop.index }}; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: {{ item.sog_transition_duration }}s; /* Safari 4.0 - 8.0 */
+    animation-name: move-layer-{{ loop.index }};
+    animation-duration: {{ item.sog_transition_duration }}s;
+    animation-iteration-count: infinite;
+  }
+  @-webkit-keyframes move-layer-{{ loop.index }} {
+    0% { transform: translateX(0); }
+    50% { transform: translateX({{ item.sog_distance }}%); }
+    100% { transform: translateX(0); }
+  }
+  @keyframes move-layer-{{ loop.index }} {
+    0% { transform: translateX(0); }
+    50% { transform: translateX({{ item.sog_distance }}%); }
+    100% { transform: translateX(0); }
+  }
+  {% endfor %}
+</style>
+
+<div class="sog_animation-container">
+  {% for item in module.sog_layer %}
+    <div class="sog_animation-layer layer-{{ loop.index }}" style="background-image: url({{ item.sog_background_image.src }});"></div>
+  {% endfor %}
+</div>
