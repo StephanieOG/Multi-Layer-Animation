@@ -1,0 +1,12 @@
+.sog_animation-container {
+  position: relative; 
+  overflow: hidden;
+}
+.sog_animation-layer {
+  width: 100%;
+  position: absolute;
+  background-size: contain;
+	background-position: top center;
+	background-repeat: no-repeat;
+  height: 0;
+}
